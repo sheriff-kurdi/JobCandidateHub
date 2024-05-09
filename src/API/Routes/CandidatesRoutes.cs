@@ -16,6 +16,4 @@ public static class CandidatesRoutes
            return Results.Ok();
        });
     }
-//dotnet ef migrations add InitialMigration --context CandidateHubDBContext -p ../Kurdi.Inventory.Persistence/Kurdi.Inventory.Persistence.csproj -o Data/Migrations
-
 }
