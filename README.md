@@ -23,6 +23,8 @@ JobCandidateHub solution with C# &amp; .NET
 
 - [EFCore](https://learn.microsoft.com/en-us/ef/core/)
 
+- [Redis](https://redis.io/)
+
 - [Swagger](https://github.com/swaggo/swag)
 
 - [xUnit](https://xunit.net/)
