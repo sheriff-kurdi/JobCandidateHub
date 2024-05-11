@@ -14,11 +14,10 @@ builder.Services.AddSettings();
 builder.Services.AddCustomExceptionsHandling();
 builder.Services.AddHealthChecks();
 builder.Services.AddSwaggerGen();
+builder.Services.AddRepositories();
 builder.AddDatabase();
+builder.AddRedis();
 #endregion
-
-
-
 
 
 var app = builder.Build();

@@ -14,8 +14,8 @@ public class SaveCandidateValidator : AbstractValidator<SaveCandidateRequest>
             .EmailAddress()
             .WithMessage("A valid email is required");
         RuleFor(x => x.Comment).NotEmpty();
-        
-        
+
+
         When(x => x.BestCallTime != null, () =>
         {
             RuleFor(x => x.BestCallTime)
