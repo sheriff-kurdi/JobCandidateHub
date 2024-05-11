@@ -1,4 +1,4 @@
-# E-Commerce
+# JobCandidateHub
 JobCandidateHub solution with C# &amp; .NET 
 
 
