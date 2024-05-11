@@ -8,7 +8,7 @@ public record SaveCandidateRequest
     public required string LastName { get; set; }
     public string? PhoneNumber { get; set; }
     public required string Email { get; set; }
-    public TimeSpan? BestCallTime { get; set; }
+    public Time? BestCallTime { get; set; }
     public string? LinkedInProfileUrl { get; set; }
     public string? GitHubProfileUrl { get; set; }
     public required string Comment { get; set; }
@@ -21,12 +21,20 @@ public record SaveCandidateRequest
             LastName = LastName,
             Email = Email,
             PhoneNumber = PhoneNumber,
+            BestCallTime = BestCallTime != null ? new TimeOnly(BestCallTime.Hour, BestCallTime.Minutes) : null,
             GitHubProfileUrl = GitHubProfileUrl,
             LinkedInProfileUrl = LinkedInProfileUrl,
             Comment = Comment
 
         };
     }
+}
+
+public record Time
+{
+    public int Hour { get; set; }
+    public int Minutes { get; set; }
+    public required string TimeZone { get; set; }
 }
 
 

@@ -10,10 +10,18 @@ public static class CandidatesRoutes
     {
         var candidatesGroup = app.MapGroup("/api/Candidates").WithTags("Candidates");
 
-        candidatesGroup.MapPost("/", async ([FromBody] SaveCandidateRequest saveCandidateRequest, [FromServices] IMediator mediator) =>
-       {
-           await mediator.Send(new SaveCandidateCommand(saveCandidateRequest));
-           return Results.Ok();
-       });
+        candidatesGroup.MapPost("/", SaveCandidateAsync)
+            .WithName("Save Candidate")
+            .WithOpenApi();
+    }
+
+    private static async Task<IResult> SaveCandidateAsync([FromBody] SaveCandidateRequest saveCandidateRequest, [FromServices] IMediator mediator)
+    {
+        var result = await mediator.Send(new SaveCandidateCommand(saveCandidateRequest));
+        if (!result.IsSuccess)
+        {
+            return Results.BadRequest(result.Errors);
+        }
+        return Results.Ok(result.SuccessMessage);
     }
 }

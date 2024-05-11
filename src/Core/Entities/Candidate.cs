@@ -9,7 +9,7 @@ public class Candidate
     public string? PhoneNumber { get; set; }
     [Key]
     public required string Email { get; set; }
-    public TimeSpan? BestCallTime { get; set; }
+    public TimeOnly? BestCallTime { get; set; }
     public string? LinkedInProfileUrl { get; set; }
     public string? GitHubProfileUrl { get; set; }
     public required string Comment { get; set; }
