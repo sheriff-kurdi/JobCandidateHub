@@ -1,22 +1,28 @@
-using JobCandidateHub.Persistence.Configurations;
-using JobCandidateHub.Persistence.Data;
-using Microsoft.EntityFrameworkCore;
+using API.Middlewares;
+using JobCandidateHub.API.Configurations;
+using JobCandidateHub.API.Routes;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddMvcCore()
-        .AddApiExplorer();
-var databaseSettings = new DatabaseSettings();
-builder.Configuration.GetSection(DatabaseSettings.DatabaseSection).Bind(databaseSettings);
-builder.Services.AddDbContext<CandidateHubDBContext>(options => 
-    options
-    .UseNpgsql(databaseSettings.PostgresConnectionString)
-    .UseSnakeCaseNamingConvention());
+builder.Services.AddEndpointsApiExplorer();
 
+#region services injection
+builder.Services.AddMediator();
+builder.Services.AddFluentValidation();
+builder.Services.AddSettings();
+builder.Services.AddCustomExceptionsHandling();
+builder.Services.AddHealthChecks();
 builder.Services.AddSwaggerGen();
+builder.AddDatabase();
+#endregion
+
+
+
+
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -24,32 +30,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseExceptionHandler(opt => { });
 app.UseHttpsRedirection();
+app.UseHealthCheckMiddleware();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast") 
-.WithOpenApi();
+app.UseApplicationRoutes();
+
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// for exposing to Integration test
+public partial class Program { }
+
