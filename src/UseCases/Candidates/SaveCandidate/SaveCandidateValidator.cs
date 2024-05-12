@@ -1,4 +1,6 @@
 using FluentValidation;
+using JobCandidateHub.UseCases.Shared.Validators;
+using UseCases.Shared.Validators;
 
 namespace JobCandidateHub.UseCases.Candidates.SaveCandidate;
 
@@ -31,42 +33,4 @@ public class SaveCandidateValidator : AbstractValidator<SaveCandidateRequest>
     }
 
 
-}
-public class TimeValidator : AbstractValidator<Time>
-{
-
-    public TimeValidator()
-    {
-        RuleFor(x => x.Hour).LessThanOrEqualTo(24).GreaterThanOrEqualTo(0);
-        RuleFor(x => x.Minutes).LessThanOrEqualTo(60).GreaterThanOrEqualTo(0);
-        RuleFor(x => x.TimeZone).Must(x => ValidTimeZone(x)).WithMessage("Invalid timezone.");
-
-    }
-
-    /// <summary>
-    /// to populate list of time zones for user
-    ///var timezones =TimeZoneInfo.GetSystemTimeZones().Select(timeZone=> timeZone.Id);
-    /// </summary>
-    private static bool ValidTimeZone(string? timeZone)
-    {
-        if (timeZone is null) return true;
-        try
-        {
-            TimeZoneInfo.FindSystemTimeZoneById(timeZone);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-}
-public class PhoneNumberValidator : AbstractValidator<string>
-{
-    public PhoneNumberValidator()
-    {
-        RuleFor(phoneNumber => phoneNumber)
-            .NotEmpty().WithMessage("Phone number is required.")
-            .Matches(@"^\+(?:[0-9]?){6,14}[0-9]$").WithMessage("Invalid phone number format, Please insert valid phone number with the country code.");
-    }
 }

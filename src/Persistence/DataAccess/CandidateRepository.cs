@@ -17,7 +17,7 @@ namespace Persistence.DataAccess
             }
             else
             {
-                if (candidateHubDBContext.Candidates.Any(candidate => candidate.Email == candidate.Email))
+                if (candidateHubDBContext.Candidates.Any(c => c.Email == candidate.Email))
                 {
                     candidateHubDBContext.Candidates.Update(candidate);
                 }

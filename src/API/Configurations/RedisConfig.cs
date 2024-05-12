@@ -1,4 +1,3 @@
-using JobCandidateHub.API.ExceptionsHandling;
 using JobCandidateHub.Persistence.Configurations;
 
 namespace JobCandidateHub.API.Configurations;

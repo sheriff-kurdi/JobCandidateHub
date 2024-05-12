@@ -19,7 +19,7 @@ public record SaveCandidateRequest
         {
             FirstName = FirstName,
             LastName = LastName,
-            Email = Email,
+            Email = Email.ToLower(),
             PhoneNumber = PhoneNumber,
             BestCallTime = BestCallTime != null ? new TimeOnly(BestCallTime.Hour, BestCallTime.Minutes) : null,
             GitHubProfileUrl = GitHubProfileUrl,
